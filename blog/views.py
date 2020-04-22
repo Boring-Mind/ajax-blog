@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 
-from .models import Post
-
+from blog.models import Post
 
 # Defines count of posts on page
 POSTS_ON_PAGE = 5
