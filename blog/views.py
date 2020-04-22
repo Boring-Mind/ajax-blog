@@ -54,10 +54,15 @@ def empty_response():
     return HttpResponse("", content_type="text/html")
 
 
-def page_out_of_bound(requested_page: int, current_page: int):
-    """Check, that requested page is not out of bound.
+def forbidden_response():
+    """Shortcut for forbidden (403) HttpResponse."""
+    return HttpResponse('', status=403)
 
-    If page is out of bound, then there are no more pages available.
+
+def no_more_pages(requested_page: int, current_page: int):
+    """Check, that there are no more pages available.
+
+    If requested_page is out of bound, then there are no more pages available.
     """
     return requested_page > current_page
 
@@ -78,13 +83,14 @@ def render_blog_page(request):
 
         page = get_page(requested_page_num)
 
-        if page_out_of_bound(requested_page_num, current_page=page.number):
+        if no_more_pages(requested_page_num, current_page=page.number):
             # If there are no more pages, return blank response
             return empty_response()
         return render(
             request, 'blog_page.html', {'post_list': page}
         )
-    return empty_response()
+
+    return forbidden_response()
 
 
 class PostDetail(generic.DetailView):
