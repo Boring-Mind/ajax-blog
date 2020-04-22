@@ -5,6 +5,7 @@ from django.views import generic
 
 from .models import Post
 
+
 # Defines count of posts on page
 POSTS_ON_PAGE = 5
 
