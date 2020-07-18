@@ -84,7 +84,6 @@ def render_blog_page(request):
         page = get_page(requested_page_num)
 
         if no_more_pages(requested_page_num, current_page=page.number):
-            # If there are no more pages, return blank response
             return empty_response()
         return render(
             request, 'blog_page.html', {'post_list': page}
